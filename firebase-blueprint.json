@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and usage statistics.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "level": { "type": "integer" },
+        "streak": { "type": "integer" },
+        "totalListeningMinutes": { "type": "integer" },
+        "harmonyScore": { "type": "integer" },
+        "lastActiveAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "MoodLog": {
+      "title": "Mood Log",
+      "description": "A record of a user's mood and the associated energy level.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "moodType": { "type": "string", "enum": ["happy", "relaxed", "sad", "workout", "focus", "melancholy", "energetic"] },
+        "energyValue": { "type": "integer", "description": "0-100" },
+        "note": { "type": "string" },
+        "playlist": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "source": { "type": "string" },
+            "tracks": { "type": "integer" },
+            "coverUrl": { "type": "string" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "moodType", "energyValue", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profile and stats."
+    },
+    "/moodLogs/{logId}": {
+      "schema": "MoodLog",
+      "description": "Stores individual mood tracking entries."
+    }
+  }
+}
