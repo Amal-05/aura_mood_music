@@ -18,6 +18,19 @@ jobs:
       with:
         node-version: 20
 
+    - name: Create Firebase Config
+      run: |
+        echo '{
+          "projectId": "dummy-project",
+          "appId": "1:1234567890:web:abcdef123456",
+          "apiKey": "dummy-api-key",
+          "authDomain": "dummy-project.firebaseapp.com",
+          "firestoreDatabaseId": "dummy-db",
+          "storageBucket": "dummy-project.firebasestorage.app",
+          "messagingSenderId": "1234567890",
+          "measurementId": ""
+        }' > firebase-applet-config.json
+
     - name: Install Dependencies
       run: npm install
 
