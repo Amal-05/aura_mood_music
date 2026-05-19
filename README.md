@@ -1,6 +1,6 @@
 # Run and deploy your app
 
-[![Live Website](https://img.shields.io/badge/Live_Website-View_Now-brightgreen?style=for-the-badge&logo=vercel)](https://auramoodmusic-25mf6uj7y-amalrajesh05-3865s-projects.vercel.app/)
+[![Live Website](https://img.shields.io/badge/Live_Website-View_Now-brightgreen?style=for-the-badge&logo=vercel)](https://auramoodmusic.vercel.app/)
 
 This contains everything you need to run your app locally.
 
