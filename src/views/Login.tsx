@@ -58,7 +58,14 @@ export const Login: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
-          onClick={signInWithGoogle}
+          onClick={async () => {
+            try {
+              await signInWithGoogle();
+            } catch (error: any) {
+              console.error("Google Sign-in Error:", error);
+              alert(`Sign-in failed: ${error.message}\n\nIf you are on Vercel, make sure you have added this domain to the Firebase Console -> Authentication -> Settings -> Authorized domains.`);
+            }
+          }}
           className="w-full py-4 bg-white text-black rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl hover:bg-white/90 transition-all group"
         >
           <div className="w-5 h-5 bg-black/10 rounded-full flex items-center justify-center text-xs font-bold">G</div>
