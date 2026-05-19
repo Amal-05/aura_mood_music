@@ -17,36 +17,42 @@ const STATIC_FALLBACKS: Record<string, any> = {
   happy: {
     playlists: [
       { title: "Sunshine Beats", description: "Upbeat melodies to brighten your digital workspace.", source: "AURA Curated", tracks: 24, moodTags: ["Vibrant", "Upbeat"], searchQuery: "happy morning beats", youtubeId: "y6Sxv-sUYtM" },
-      { title: "Electric Joy", description: "High-energy synth waves for maximum positivity.", source: "Spotify", tracks: 18, moodTags: ["Energetic", "Synth"], searchQuery: "positive synthwave", youtubeId: "5qap5aO4i9A" }
+      { title: "Electric Joy", description: "High-energy synth waves for maximum positivity.", source: "Spotify", tracks: 18, moodTags: ["Energetic", "Synth"], searchQuery: "positive synthwave", youtubeId: "n61ULEU7CO0" }
     ],
     quote: "Happiness is the highest form of productivity."
   },
   calm: {
     playlists: [
       { title: "Deep Forest Echoes", description: "Nature-infused ambient tracks for deep focus.", source: "AURA Curated", tracks: 12, moodTags: ["Nature", "Ambient"], searchQuery: "forest ambient meditation", youtubeId: "jfKfPfyJRdk" },
-      { title: "Soft Piano Rain", description: "Gentle keys and soft rainfall for ultimate tranquility.", source: "AURA Curated", tracks: 15, moodTags: ["Piano", "Peaceful"], searchQuery: "rainy piano study", youtubeId: "6p6pW5vP1oU" }
+      { title: "Soft Piano Rain", description: "Gentle keys and soft rainfall for ultimate tranquility.", source: "AURA Curated", tracks: 15, moodTags: ["Piano", "Peaceful"], searchQuery: "rainy piano study", youtubeId: "7NOSDKb0HlU" }
     ],
     quote: "In the midst of movement and chaos, keep stillness inside of you."
   },
   melancholy: {
     playlists: [
-      { title: "Midnight Solitude", description: "Reflective melodies for late-night introspection.", source: "AURA Curated", tracks: 10, moodTags: ["Nocturnal", "Deep"], searchQuery: "melancholic piano", youtubeId: "79kpoG4mSsc" },
-      { title: "Rainy Day Dreams", description: "Lofi textures and soft hums for rainy afternoons.", source: "Spotify", tracks: 20, moodTags: ["Lofi", "Rainy"], searchQuery: "lofi hip hop for sad days", youtubeId: "DWcUYeeE1W0" }
+      { title: "Midnight Solitude", description: "Reflective melodies for late-night introspection.", source: "AURA Curated", tracks: 10, moodTags: ["Nocturnal", "Deep"], searchQuery: "melancholic piano", youtubeId: "q76bMs-NwRk" },
+      { title: "Rainy Day Dreams", description: "Lofi textures and soft hums for rainy afternoons.", source: "Spotify", tracks: 20, moodTags: ["Lofi", "Rainy"], searchQuery: "lofi hip hop for sad days", youtubeId: "5qap5aO4i9A" }
     ],
     quote: "The soul has its own rhythm, even in the shadows."
   },
   energetic: {
     playlists: [
-      { title: "Cyberpunk Rush", description: "Fast-paced digital beats for high-intensity work.", source: "AURA Curated", tracks: 30, moodTags: ["Neon", "Fast"], searchQuery: "cyberpunk edm mix", youtubeId: "219920150" },
-      { title: "Digital Cardio", description: "Rhythmic basslines to keep your momentum high.", source: "YouTube", tracks: 25, moodTags: ["Bass", "Rhythm"], searchQuery: "high energy workout mix", youtubeId: "L8_fA8-8F_E" }
+      { title: "Cyberpunk Rush", description: "Fast-paced digital beats for high-intensity work.", source: "AURA Curated", tracks: 30, moodTags: ["Neon", "Fast"], searchQuery: "cyberpunk edm mix", youtubeId: "4xDzrJKXOOY" },
+      { title: "Digital Cardio", description: "Rhythmic basslines to keep your momentum high.", source: "YouTube", tracks: 25, moodTags: ["Bass", "Rhythm"], searchQuery: "high energy workout mix", youtubeId: "n61ULEU7CO0" }
     ],
     quote: "Action is the foundational key to all success."
   }
 };
 
 export async function getMoodMusicRecs(mood: string, energy: number): Promise<{ playlists: PlaylistSuggestion[]; quote: string }> {
-  // Normalize mood to lowercase to match fallback keys
-  const normalizedMood = mood.toLowerCase();
+  // Normalize and map mood to match fallback keys
+  const moodMap: Record<string, string> = {
+    sad: 'melancholy',
+    lonely: 'melancholy',
+    sleepy: 'calm',
+    angry: 'energetic'
+  };
+  const normalizedMood = moodMap[mood.toLowerCase()] || mood.toLowerCase();
 
   const prompt = `
     Identify 3 highly specific music playlist ideas for a user feeling "${mood}" with an energy level of ${energy}/100.

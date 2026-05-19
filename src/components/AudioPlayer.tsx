@@ -172,7 +172,18 @@ export const AudioPlayer: React.FC = () => {
       </AnimatePresence>
 
       {/* Persistent Audio Engine */}
-      <div className="absolute left-[-9999px] top-0 pointer-events-none opacity-0">
+      <div 
+        className="fixed pointer-events-none"
+        style={{
+          width: '1px',
+          height: '1px',
+          overflow: 'hidden',
+          opacity: 0.01,
+          bottom: 0,
+          right: 0,
+          zIndex: -9999
+        }}
+      >
         {/* @ts-ignore */}
         <ReactPlayer
           ref={iframeRef}
@@ -182,8 +193,8 @@ export const AudioPlayer: React.FC = () => {
           onPause={() => { if (isPlaying) togglePlay(); }}
           onProgress={(state: any) => setCurrentTime(state.playedSeconds * 1000)}
           onDuration={(dur: number) => setDuration(dur * 1000)}
-          width="100"
-          height="100"
+          width="100%"
+          height="100%"
         />
       </div>
     </>
