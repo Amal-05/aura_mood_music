@@ -38,8 +38,8 @@ export const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, user }) => {
           >
             <div className="flex justify-between items-center mb-10">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20">
-                  <img src={user?.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.uid}`} alt="User" />
+                <div className="w-12 h-12 rounded-full overflow-hidden border border-white/20 bg-surface-variant flex items-center justify-center text-xl font-bold">
+                  {user?.displayName?.[0] || 'A'}
                 </div>
                 <div>
                   <h4 className="font-display font-bold text-lg text-primary">{user?.displayName || 'Adventurer'}</h4>

@@ -17,8 +17,8 @@ export const Profile: React.FC = () => {
       <section className="flex flex-col items-center">
         <div className="relative mb-4">
           <div className="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-primary via-secondary to-tertiary glow-primary">
-            <div className="w-full h-full rounded-full overflow-hidden border-4 border-surface shadow-inner">
-               <img src={profile?.photoURL || `https://api.dicebear.com/7.x/avataaars/svg?seed=${profile?.uid}`} className="w-full h-full object-cover" />
+            <div className="w-full h-full rounded-full overflow-hidden border-4 border-surface shadow-inner bg-surface-variant flex items-center justify-center text-4xl font-bold">
+               {profile?.displayName?.[0] || 'A'}
             </div>
           </div>
           <div className="absolute -bottom-1 -right-1 bg-tertiary text-on-tertiary w-8 h-8 rounded-full flex items-center justify-center border-4 border-surface shadow-lg">
@@ -27,7 +27,7 @@ export const Profile: React.FC = () => {
         </div>
         <div className="text-center">
            <h2 className="text-3xl font-display font-black">{profile?.displayName || 'Adventurer'}</h2>
-           <p className="text-sm text-on-surface-variant font-medium">Level {profile?.level || 1} • Current Mood: Energetic</p>
+           <p className="text-sm text-on-surface-variant font-medium">Level {profile?.level || 1}</p>
         </div>
       </section>
 
@@ -36,7 +36,7 @@ export const Profile: React.FC = () => {
            <div className="absolute inset-0 bg-gradient-to-br from-tertiary/10 to-transparent opacity-50 group-hover:opacity-100 transition-opacity" />
            <div className="flex items-center gap-2">
              <Flame size={40} className="text-tertiary fill-tertiary drop-shadow-[0_0_12px_rgba(255,185,95,0.8)]" />
-             <span className="text-5xl font-display font-black text-tertiary">{profile?.streak || 12}</span>
+             <span className="text-5xl font-display font-black text-tertiary">{profile?.streak || 0}</span>
            </div>
            <h3 className="text-xl font-bold">Day Vibe Streak!</h3>
            <p className="text-xs text-on-surface-variant">You're on fire this week.</p>
@@ -45,7 +45,7 @@ export const Profile: React.FC = () => {
         <div className="glass-panel p-5 rounded-3xl space-y-4">
            <Clock size={24} className="text-secondary" />
            <div>
-              <p className="text-2xl font-display font-black leading-none">{profile?.totalListeningMinutes || '42h'}</p>
+              <p className="text-2xl font-display font-black leading-none">{profile?.totalListeningMinutes || '0h'}</p>
               <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest mt-1">Listening Time</p>
            </div>
         </div>
@@ -53,7 +53,7 @@ export const Profile: React.FC = () => {
         <div className="glass-panel p-5 rounded-3xl space-y-4">
            <Zap size={24} className="text-primary" />
            <div>
-              <p className="text-2xl font-display font-black leading-none">{profile?.harmonyScore || 18}</p>
+              <p className="text-2xl font-display font-black leading-none">{profile?.harmonyScore || 0}</p>
               <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-widest mt-1">Moods Explored</p>
            </div>
         </div>

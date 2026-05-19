@@ -61,7 +61,7 @@ export const Login: React.FC = () => {
           onClick={signInWithGoogle}
           className="w-full py-4 bg-white text-black rounded-2xl font-bold flex items-center justify-center gap-3 shadow-xl hover:bg-white/90 transition-all group"
         >
-          <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="Google" />
+          <div className="w-5 h-5 bg-black/10 rounded-full flex items-center justify-center text-xs font-bold">G</div>
           Continue with Google
           <motion.div
             animate={{ x: [0, 5, 0] }}

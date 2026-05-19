@@ -58,11 +58,9 @@ export const MoodSelector: React.FC = () => {
           }}
           className="w-48 h-48 rounded-full glass-panel flex items-center justify-center p-8 drop-shadow-[0_0_30px_rgba(208,188,255,0.3)] relative overflow-hidden"
         >
-          <img 
-            src={MOODS[selectedMood].highResIcon} 
-            alt={selectedMood}
-            className="w-full h-full object-contain relative z-10"
-          />
+          <div className="w-full h-full relative z-10 flex items-center justify-center text-[100px]">
+            {MOODS[selectedMood].icon}
+          </div>
           <div className={`absolute inset-0 bg-gradient-to-tr from-transparent opacity-20 filter blur-2xl ${MOODS[selectedMood].color.replace('text-', 'bg-')}`} />
         </motion.div>
 
@@ -153,8 +151,8 @@ export const MoodSelector: React.FC = () => {
             { id: 2, title: 'Neon Rush', img: 'https://picsum.photos/seed/neon/400/225', color: 'text-tertiary', tags: ['Energy', 'Retro'] },
           ].map(mood => (
             <div key={mood.id} className="glass-panel p-4 rounded-3xl space-y-4 group">
-               <div className="h-40 rounded-2xl overflow-hidden relative">
-                  <img src={mood.img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+               <div className="h-40 rounded-2xl overflow-hidden relative bg-surface-variant/50 flex items-center justify-center">
+                  <div className={`text-6xl font-bold opacity-30 ${mood.color}`}>{mood.title[0]}</div>
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                </div>
                <div className="flex justify-between items-center">

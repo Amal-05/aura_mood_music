@@ -36,42 +36,42 @@ export const MOODS: Record<MoodType, { label: string; icon: string; color: strin
     label: 'Happy', 
     icon: '😊', 
     color: 'text-tertiary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60a/512.webp'
+    highResIcon: ''
   },
   calm: { 
     label: 'Calm', 
     icon: '😌', 
     color: 'text-secondary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f60c/512.webp'
+    highResIcon: ''
   },
   sad: { 
     label: 'Sad', 
     icon: '💔', 
     color: 'text-primary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f494/512.webp'
+    highResIcon: ''
   },
   angry: { 
     label: 'Angry', 
     icon: '😡', 
     color: 'text-primary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f621/512.webp'
+    highResIcon: ''
   },
   energetic: { 
     label: 'Energetic', 
     icon: '🔥', 
     color: 'text-tertiary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp'
+    highResIcon: ''
   },
   lonely: { 
     label: 'Lonely', 
     icon: '🌧', 
     color: 'text-primary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f327_fe0f/512.webp' 
+    highResIcon: '' 
   },
   sleepy: { 
     label: 'Sleepy', 
     icon: '😴', 
     color: 'text-secondary',
-    highResIcon: 'https://fonts.gstatic.com/s/e/notoemoji/latest/1f634/512.webp'
+    highResIcon: ''
   },
 };

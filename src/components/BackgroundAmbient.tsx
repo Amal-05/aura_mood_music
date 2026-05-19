@@ -62,7 +62,7 @@ export const BackgroundAmbient: React.FC = () => {
       <div 
         className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none"
         style={{
-          backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")'
+          backgroundImage: 'none'
         }}
       />
     </div>

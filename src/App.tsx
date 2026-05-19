@@ -25,6 +25,9 @@ const AuthContext = createContext<AuthContextType>({ user: null, profile: null, 
 
 export const useAuth = () => useContext(AuthContext);
 
+import { PlayerProvider } from './context/PlayerContext';
+import { AudioPlayer } from './components/AudioPlayer';
+
 export default function App() {
   const [user, setUser] = useState<FirebaseUser | null>(null);
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -77,30 +80,33 @@ export default function App() {
 
   return (
     <AuthContext.Provider value={{ user, profile, loading }}>
-      <Router>
-        <div className="min-h-screen pb-32">
-          <BackgroundAmbient />
-          <TopBar onMenuClick={() => setIsMenuOpen(true)} />
-          <Drawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} user={user} />
-          <AnimatePresence mode="wait">
-            {!user ? (
-              <Login />
-            ) : (
-              <main className="pt-24 px-5 max-w-4xl mx-auto">
-                <Routes>
-                  <Route path="/" element={<MoodSelector />} />
-                  <Route path="/explore" element={<Explore />} />
-                  <Route path="/journey" element={<Journey />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </main>
-            )}
-          </AnimatePresence>
-          <BottomNav />
-        </div>
-      </Router>
+      <PlayerProvider>
+        <Router>
+          <div className="min-h-screen pb-32">
+            <BackgroundAmbient />
+            <TopBar onMenuClick={() => setIsMenuOpen(true)} />
+            <Drawer isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} user={user} />
+            <AnimatePresence mode="wait">
+              {!user ? (
+                <Login key="login" />
+              ) : (
+                <main className="pt-24 px-5 max-w-4xl mx-auto">
+                  <Routes>
+                    <Route path="/" element={<MoodSelector />} />
+                    <Route path="/explore" element={<Explore />} />
+                    <Route path="/journey" element={<Journey />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="*" element={<Navigate to="/" />} />
+                  </Routes>
+                </main>
+              )}
+            </AnimatePresence>
+            <AudioPlayer />
+            <BottomNav />
+          </div>
+        </Router>
+      </PlayerProvider>
     </AuthContext.Provider>
   );
 }

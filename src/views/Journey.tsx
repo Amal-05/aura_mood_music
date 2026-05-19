@@ -16,17 +16,36 @@ export const Journey: React.FC = () => {
     const q = query(
       collection(db, 'mood_logs'),
       where('userId', '==', user.uid),
-      orderBy('createdAt', 'desc'),
-      limit(10)
+      limit(20)
     );
 
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const logsData = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as MoodLog[];
-      setLogs(logsData);
-      setLoading(false);
+    const unsubscribe = onSnapshot(q, {
+      next: (snapshot) => {
+        const logsData = snapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        })) as MoodLog[];
+        
+        // Sort by date in JavaScript with safety for null/pending server timestamps
+        const sortedLogs = [...logsData].sort((a, b) => {
+          const getTime = (val: any) => {
+            if (!val) return Date.now(); // Put pending logs at the top
+            if (val instanceof Date) return val.getTime();
+            if (typeof val.toDate === 'function') return val.toDate().getTime();
+            if (typeof val === 'string') return new Date(val).getTime();
+            if (typeof val === 'number') return val;
+            return 0;
+          };
+          return getTime(b.createdAt) - getTime(a.createdAt);
+        });
+
+        setLogs(sortedLogs.slice(0, 10));
+        setLoading(false);
+      },
+      error: (error) => {
+        console.error("Firestore Journey Error:", error);
+        setLoading(false);
+      }
     });
 
     return () => unsubscribe();
@@ -59,7 +78,7 @@ export const Journey: React.FC = () => {
           </div>
           <div className="text-right">
             <span className="text-4xl font-display font-black text-primary">
-              {logs.length > 0 ? Math.round(logs.reduce((acc, curr) => acc + curr.energyValue, 0) / logs.length) : 0}%
+              {logs.length > 0 ? Math.round(logs.reduce((acc, curr) => acc + (curr.energyValue || 0), 0) / logs.length) : 0}%
             </span>
             <p className="text-[10px] font-bold text-secondary uppercase tracking-widest leading-none">Avg Energy</p>
           </div>
@@ -88,8 +107,14 @@ export const Journey: React.FC = () => {
         <div className="absolute left-6 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary via-secondary to-transparent opacity-20" />
         
         {logs.map((log, idx) => {
-          const moodInfo = MOODS[log.moodType];
-          const date = log.createdAt instanceof Date ? log.createdAt : (log.createdAt as any)?.toDate ? (log.createdAt as any).toDate() : new Date();
+          const moodInfo = MOODS[log.moodType] || { label: 'Unknown', color: 'text-primary', icon: '✨', highResIcon: '' };
+          const getSafeDate = (val: any) => {
+            if (!val) return new Date();
+            if (val instanceof Date) return val;
+            if (typeof val.toDate === 'function') return val.toDate();
+            return new Date(val);
+          };
+          const date = getSafeDate(log.createdAt);
           
           return (
             <motion.div 
@@ -100,7 +125,7 @@ export const Journey: React.FC = () => {
               className="relative flex gap-6"
             >
               <div className="relative z-10 w-12 h-12 rounded-full glass-panel flex items-center justify-center border border-white/20 shadow-xl overflow-hidden">
-                 <img src={moodInfo.highResIcon} className="w-8 h-8 object-contain" alt={log.moodType} />
+                 <span className="text-2xl">{moodInfo.icon}</span>
               </div>
               <div className="flex-1 glass-panel rounded-3xl p-5 space-y-3">
                  <div className="flex justify-between items-start">
