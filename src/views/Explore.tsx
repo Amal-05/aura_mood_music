@@ -14,7 +14,7 @@ export const Explore: React.FC = () => {
   const [playlists, setPlaylists] = useState<PlaylistSuggestion[]>([]);
   const [quote, setQuote] = useState("");
   const [loading, setLoading] = useState(true);
-  const { setPlayingTrack, setIsFullScreen } = usePlayer();
+  const { setPlayingTrack, setIsPlaying, setIsFullScreen } = usePlayer();
 
   // Stable SoundCloud sets for moods
   const MOOD_SOUNDCLOUD: Record<string, string> = {
@@ -107,6 +107,7 @@ export const Explore: React.FC = () => {
                         ? `https://www.youtube.com/watch?v=${playlist.youtubeId}` 
                         : (MOOD_SOUNDCLOUD[mood] || MOOD_SOUNDCLOUD['happy']);
                       setPlayingTrack({ title: playlist.title, url });
+                      setIsPlaying(true);
                       setIsFullScreen(true);
                     }}
                     className="flex-1 bg-gradient-to-r from-primary to-secondary py-3 rounded-xl font-bold flex items-center justify-center gap-2 active:scale-95 transition-transform text-on-primary shadow-lg"
