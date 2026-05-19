@@ -10,6 +10,7 @@ export interface PlaylistSuggestion {
   coverUrl: string;
   moodTags: string[];
   searchUrl: string;
+  youtubeId?: string;
 }
 
 const STATIC_FALLBACKS: Record<string, any> = {

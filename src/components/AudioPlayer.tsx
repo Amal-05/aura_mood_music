@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import ReactPlayer from 'react-player';
 import { usePlayer } from '../context/PlayerContext';
 import { Play, Pause, SkipBack, SkipForward, Repeat, Heart, Shuffle, Volume2, ChevronDown, Activity, Music } from 'lucide-react';
 
@@ -7,7 +8,7 @@ export const AudioPlayer: React.FC = () => {
   const { 
     playingTrack, setPlayingTrack, 
     isPlaying, isFullScreen, setIsFullScreen, 
-    currentTime, duration, 
+    currentTime, setCurrentTime, duration, setDuration, 
     iframeRef, togglePlay, seekTo 
   } = usePlayer();
 
@@ -151,7 +152,7 @@ export const AudioPlayer: React.FC = () => {
                 </div>
                 <h4 className="font-bold text-lg truncate leading-none mb-1">{playingTrack.title}</h4>
                 <p className="text-xs text-on-surface-variant flex items-center gap-1">
-                  <Music size={12} /> SoundCloud Engine
+                  <Music size={12} /> Aura Engine
                 </p>
               </div>
 
@@ -169,16 +170,23 @@ export const AudioPlayer: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Persistent Audio Engine (SoundCloud) */}
+      {/* Persistent Audio Engine */}
       <div className="absolute left-[-9999px] top-0 pointer-events-none opacity-0">
-        <iframe
+        <ReactPlayer
           ref={iframeRef}
+          url={playingTrack.url}
+          playing={isPlaying}
+          onPlay={() => { if (!isPlaying) togglePlay(); }}
+          onPause={() => { if (isPlaying) togglePlay(); }}
+          onProgress={(state: any) => setCurrentTime(state.playedSeconds * 1000)}
+          onDuration={(dur: number) => setDuration(dur * 1000)}
           width="100"
           height="100"
-          scrolling="no"
-          frameBorder="no"
-          allow="autoplay"
-          src={playingTrack.url}
+          config={{
+            youtube: {
+              playerVars: { autoplay: 1 }
+            }
+          }}
         />
       </div>
     </>

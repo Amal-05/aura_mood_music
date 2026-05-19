@@ -14,8 +14,10 @@ interface PlayerContextType {
   isFullScreen: boolean;
   setIsFullScreen: (full: boolean) => void;
   currentTime: number;
+  setCurrentTime: (time: number) => void;
   duration: number;
-  iframeRef: React.RefObject<HTMLIFrameElement>;
+  setDuration: (time: number) => void;
+  iframeRef: React.RefObject<any>;
   togglePlay: (e?: React.MouseEvent) => void;
   seekTo: (time: number) => void;
 }
@@ -28,44 +30,26 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const iframeRef = useRef<any>(null); // This is now used for ReactPlayer
 
   const togglePlay = (e?: React.MouseEvent) => {
     e?.stopPropagation();
-    if ((window as any).SC && iframeRef.current) {
-      const widget = (window as any).SC.Widget(iframeRef.current);
-      widget.toggle();
-      setIsPlaying(!isPlaying);
-    }
+    setIsPlaying(!isPlaying);
   };
 
   const seekTo = (time: number) => {
-    if ((window as any).SC && iframeRef.current) {
-      const widget = (window as any).SC.Widget(iframeRef.current);
-      widget.seekTo(time);
-      setCurrentTime(time);
+    setCurrentTime(time);
+    if (iframeRef.current) {
+      iframeRef.current.seekTo(time / 1000);
     }
   };
-
-  useEffect(() => {
-    let interval: any;
-    if (playingTrack && (window as any).SC) {
-      interval = setInterval(() => {
-        const widget = (window as any).SC.Widget(iframeRef.current);
-        widget.getPosition((pos: number) => setCurrentTime(pos));
-        widget.getDuration((dur: number) => setDuration(dur));
-        widget.isPaused((paused: boolean) => setIsPlaying(!paused));
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [playingTrack]);
 
   return (
     <PlayerContext.Provider value={{
       playingTrack, setPlayingTrack,
       isPlaying, setIsPlaying,
       isFullScreen, setIsFullScreen,
-      currentTime, duration,
+      currentTime, setCurrentTime, duration, setDuration,
       iframeRef, togglePlay, seekTo
     }}>
       {children}

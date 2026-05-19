@@ -103,7 +103,9 @@ export const Explore: React.FC = () => {
                 <div className="flex gap-3">
                   <button 
                     onClick={() => {
-                      const url = MOOD_SOUNDCLOUD[mood] || MOOD_SOUNDCLOUD['happy'];
+                      const url = playlist.youtubeId 
+                        ? `https://www.youtube.com/watch?v=${playlist.youtubeId}` 
+                        : (MOOD_SOUNDCLOUD[mood] || MOOD_SOUNDCLOUD['happy']);
                       setPlayingTrack({ title: playlist.title, url });
                       setIsFullScreen(true);
                     }}
