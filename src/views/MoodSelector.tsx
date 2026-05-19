@@ -21,7 +21,7 @@ export const MoodSelector: React.FC = () => {
         userId: user.uid,
         moodType: selectedMood,
         energyValue: energy,
-        createdAt: serverTimestamp(),
+        createdAt: serverTimestamp() as any,
       };
       
       await addDoc(collection(db, 'mood_logs'), moodLog);

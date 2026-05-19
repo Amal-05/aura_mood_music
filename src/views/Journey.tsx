@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { useAuth } from '../App';
 import { db, collection, query, where, orderBy, limit, onSnapshot } from '../lib/firebase';
 import { MoodLog, MOODS } from '../types';
-import { Calendar, Clock, BarChart3 } from 'lucide-react';
+import { Calendar, Clock, BarChart3, Music } from 'lucide-react';
 
 export const Journey: React.FC = () => {
   const { user } = useAuth();
