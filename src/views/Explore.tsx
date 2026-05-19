@@ -20,8 +20,11 @@ export const Explore: React.FC = () => {
   const MOOD_SOUNDCLOUD: Record<string, string> = {
     happy: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1253451556&color=%234cd7f6&auto_play=true',
     calm: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1253448835&color=%234cd7f6&auto_play=true',
-    melancholy: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1301017042&color=%234cd7f6&auto_play=true',
-    energetic: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/219920150&color=%234cd7f6&auto_play=true'
+    sad: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1301017042&color=%234cd7f6&auto_play=true',
+    angry: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/219920150&color=%234cd7f6&auto_play=true',
+    energetic: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/219920150&color=%234cd7f6&auto_play=true',
+    lonely: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1301017042&color=%234cd7f6&auto_play=true',
+    sleepy: 'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1253448835&color=%234cd7f6&auto_play=true'
   };
 
   useEffect(() => {
@@ -100,7 +103,7 @@ export const Explore: React.FC = () => {
                 <div className="flex gap-3">
                   <button 
                     onClick={() => {
-                      const url = MOOD_SOUNDCLOUD[mood];
+                      const url = MOOD_SOUNDCLOUD[mood] || MOOD_SOUNDCLOUD['happy'];
                       setPlayingTrack({ title: playlist.title, url });
                       setIsFullScreen(true);
                     }}
