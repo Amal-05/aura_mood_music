@@ -189,10 +189,9 @@ export const AudioPlayer: React.FC = () => {
           ref={iframeRef}
           url={playingTrack.url}
           playing={isPlaying}
-          onPlay={() => { if (!isPlaying) togglePlay(); }}
-          onPause={() => { if (isPlaying) togglePlay(); }}
           onProgress={(state: any) => setCurrentTime(state.playedSeconds * 1000)}
           onDuration={(dur: number) => setDuration(dur * 1000)}
+          onError={(e: any) => console.error("ReactPlayer Error:", e)}
           width="100%"
           height="100%"
         />
