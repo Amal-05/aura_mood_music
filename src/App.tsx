@@ -35,6 +35,29 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
+    const mockUserStr = localStorage.getItem('aura_mock_user');
+    if (mockUserStr) {
+      try {
+        const mockUser = JSON.parse(mockUserStr);
+        setUser(mockUser);
+        setProfile({
+          uid: mockUser.uid,
+          email: mockUser.email || '',
+          displayName: mockUser.displayName || 'Explorer',
+          photoURL: '',
+          level: 1,
+          streak: 1,
+          totalListeningMinutes: 10,
+          harmonyScore: 80,
+          lastActiveAt: new Date().toISOString(),
+        });
+        setLoading(false);
+        return; // Don't subscribe to Firebase Auth if bypassing
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       if (user) {
@@ -46,7 +69,7 @@ export default function App() {
             uid: user.uid,
             email: user.email || '',
             displayName: user.displayName || 'Explorer',
-            photoURL: user.photoURL || '',
+            photoURL: '',
             level: 1,
             streak: 0,
             totalListeningMinutes: 0,

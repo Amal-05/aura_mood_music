@@ -60,7 +60,11 @@ export const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, user }) => {
             </nav>
 
             <button 
-              onClick={() => auth.signOut()}
+              onClick={() => {
+                localStorage.removeItem('aura_mock_user');
+                auth.signOut();
+                window.location.reload();
+              }}
               className="mt-auto flex items-center gap-4 p-4 text-on-surface-variant hover:bg-white/5 rounded-2xl transition-colors w-full"
             >
               <LogOut size={20} className="text-red-400" />

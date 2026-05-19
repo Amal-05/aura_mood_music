@@ -78,6 +78,21 @@ export const Login: React.FC = () => {
           </motion.div>
         </motion.button>
 
+        <button
+          onClick={() => {
+            const mockUser = {
+              uid: 'mock-user-id',
+              email: 'mockexplorer@aura.com',
+              displayName: 'Mock Explorer',
+            };
+            localStorage.setItem('aura_mock_user', JSON.stringify(mockUser));
+            window.location.reload();
+          }}
+          className="w-full py-3 bg-white/5 border border-white/10 text-on-surface hover:bg-white/10 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all"
+        >
+          🔑 Bypass Login (Demo Mode)
+        </button>
+
         <p className="text-[10px] text-on-surface-variant/60 font-medium">
           By continuing, you agree to Aura's Terms & Privacy Policy
         </p>
